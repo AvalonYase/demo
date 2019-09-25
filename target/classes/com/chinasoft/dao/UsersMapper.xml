@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.chinasoft.dao.UsersMapper">
+  		<select id="selectUsersByNameAndPwd" parameterType="java.lang.String" resultType="com.chinasoft.entity.Users">
+  			select * from users where username=#{username} and password=#{password}
+  		</select>
+  		<insert id="creatNewUser" parameterType="com.chinasoft.entity.Users">
+  			insert into users(username,password,url) values (#{username},#{password},#{url})
+  		</insert>
+  </mapper>

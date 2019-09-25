@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasoft.dao.ArticleMapper" >
+  <select id="getArticle" parameterType="java.lang.String" resultType="com.chinasoft.entity.Article">
+  		select * from article a left join user u on a.uid=u.uid where where a.uid=#{uid} and a.atitle=#{atitle}
+  </select>
+  
+  
+  
+  <resultMap id="BaseResultMap" type="com.chinasoft.entity.Article" >
+    <id column="aid" property="aid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="atitle" property="atitle" jdbcType="VARCHAR" />
+    <result column="adatetime" property="adatetime" jdbcType="VARCHAR" />
+    <result column="commentsnum" property="commentsnum" jdbcType="INTEGER" />
+    <result column="praisenum" property="praisenum" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinasoft.entity.Article" extends="BaseResultMap" >
+    <result column="acontent" property="acontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    aid, uid, atitle, adatetime, commentsnum, praisenum
+  </sql>
+  <sql id="Blob_Column_List" >
+    acontent
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    where aid = #{aid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from article
+    where aid = #{aid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinasoft.entity.Article" >
+    insert into article (aid, uid, atitle, 
+      adatetime, commentsnum, praisenum, 
+      acontent)
+    values (#{aid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{atitle,jdbcType=VARCHAR}, 
+      #{adatetime,jdbcType=VARCHAR}, #{commentsnum,jdbcType=INTEGER}, #{praisenum,jdbcType=INTEGER}, 
+      #{acontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasoft.entity.Article" >
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aid != null" >
+        aid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="atitle != null" >
+        atitle,
+      </if>
+      <if test="adatetime != null" >
+        adatetime,
+      </if>
+      <if test="commentsnum != null" >
+        commentsnum,
+      </if>
+      <if test="praisenum != null" >
+        praisenum,
+      </if>
+      <if test="acontent != null" >
+        acontent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aid != null" >
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="atitle != null" >
+        #{atitle,jdbcType=VARCHAR},
+      </if>
+      <if test="adatetime != null" >
+        #{adatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsnum != null" >
+        #{commentsnum,jdbcType=INTEGER},
+      </if>
+      <if test="praisenum != null" >
+        #{praisenum,jdbcType=INTEGER},
+      </if>
+      <if test="acontent != null" >
+        #{acontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasoft.entity.Article" >
+    update article
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="atitle != null" >
+        atitle = #{atitle,jdbcType=VARCHAR},
+      </if>
+      <if test="adatetime != null" >
+        adatetime = #{adatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsnum != null" >
+        commentsnum = #{commentsnum,jdbcType=INTEGER},
+      </if>
+      <if test="praisenum != null" >
+        praisenum = #{praisenum,jdbcType=INTEGER},
+      </if>
+      <if test="acontent != null" >
+        acontent = #{acontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasoft.entity.Article" >
+    update article
+    set uid = #{uid,jdbcType=INTEGER},
+      atitle = #{atitle,jdbcType=VARCHAR},
+      adatetime = #{adatetime,jdbcType=VARCHAR},
+      commentsnum = #{commentsnum,jdbcType=INTEGER},
+      praisenum = #{praisenum,jdbcType=INTEGER},
+      acontent = #{acontent,jdbcType=LONGVARCHAR}
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasoft.entity.Article" >
+    update article
+    set uid = #{uid,jdbcType=INTEGER},
+      atitle = #{atitle,jdbcType=VARCHAR},
+      adatetime = #{adatetime,jdbcType=VARCHAR},
+      commentsnum = #{commentsnum,jdbcType=INTEGER},
+      praisenum = #{praisenum,jdbcType=INTEGER}
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+</mapper>
